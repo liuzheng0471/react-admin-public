@@ -1,20 +1,22 @@
 import React from 'react';
-import {ConfigProvider} from 'antd';
-import zhCN from 'antd/lib/locale-provider/zh_CN';
-import AppRouter from './router/AppRouter';
-import {connect} from './models';
-import moment from 'moment';
-import 'moment/locale/zh-cn'; // 解决 antd 日期组件国际化问题
-// 设置语言
-moment.locale('zh-cn');
+import './styles/index.styl';
+import 'normalize.css/normalize.css'
+import { createBrowserHistory } from 'history';
+import { Router } from 'react-router-dom';
+import RouteConfig from './configs/Router'
+import { Provider } from 'mobx-react'
+import Layout from './components/layout'
+import store from './stores/store' 
 
-@connect()
-export default class App extends React.Component {
-    render() {
-        return (
-            <ConfigProvider locale={zhCN}>
-                <AppRouter/>
-            </ConfigProvider>
-        );
-    }
-}
+
+const App = () => 
+    <Provider store={store}>
+        <Router history={createBrowserHistory()}>
+            <Layout>
+                <RouteConfig />
+            </Layout>
+        </Router>
+    </Provider>
+        
+
+export default App;

@@ -1,15 +1,15 @@
-const proxy = require('http-proxy-middleware');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
-module.exports = function (app) {
-    app.use(proxy('/api',
-        {
-            target: 'http://localhost:3000/',
-            pathRewrite: {
-                '^/api': '',
-            },
-            changeOrigin: true,
-            secure: false, // 是否验证证书
-            ws: true, // 启用websocket
-        }
-    ));
+module.exports = (app) => {
+  // eslint-disable-next-line no-unused-expressions
+  app.use(
+    createProxyMiddleware(['/api'], {
+      target: 'http://book.wechatmore.xyz:8090',
+      pathRewrite: {
+        '^/api' : '',
+      },
+      secure: false,
+      changeOrigin: true,
+    })
+  )
 };
